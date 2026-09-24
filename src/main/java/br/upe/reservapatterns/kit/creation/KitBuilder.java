@@ -16,15 +16,33 @@ public class KitBuilder {
   }
 
   public KitBuilder description(String description) {
-    throw new UnsupportedOperationException("Implementar Builder");
+    if (description == null) {
+      throw new IllegalArgumentException("Descrição obrigatória");
+    }
+    this.description = description;
+    return this;
   }
 
   public KitBuilder add(Equipment equipment, int quantity) {
-    throw new UnsupportedOperationException("Implementar Builder");
+    if (equipment == null || quantity <= 0 || quantity > equipment.getTotalUnits()) {
+      throw new IllegalArgumentException("Item do kit inválido");
+    }
+    if (entries.stream().anyMatch(entry -> entry.equipment() == equipment
+            || equipment.getId() != null
+            && equipment.getId().equals(entry.equipment().getId()))) {
+      throw new IllegalArgumentException("Equipamento repetido");
+    }
+    entries.add(new Entry(equipment, quantity));
+    return this;
   }
 
   public Kit build() {
-    throw new UnsupportedOperationException("Implementar Builder");
+    if (name == null || name.isBlank() || entries.isEmpty()) {
+      throw new IllegalArgumentException("Informe o nome e ao menos um item");
+    }
+    Kit kit = new Kit(name, description);
+    entries.forEach(entry -> kit.add(entry.equipment(), entry.quantity()));
+    return kit;
   }
 
   private record Entry(Equipment equipment, int quantity) {}
