@@ -17,4 +17,3 @@ public class LectureBookingCreator extends BookingCreator {
             BookingKind.LECTURE, BookingStatus.CONFIRMED);
   }
 }
-
