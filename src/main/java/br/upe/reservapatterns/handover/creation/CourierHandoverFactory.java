@@ -13,13 +13,15 @@ public class CourierHandoverFactory implements HandoverFactory {
   public PickupTerms pickup(Booking booking, String destination) {
     String cleanDestination = validateDestination(destination);
 
-    return new PickupTerms("COURIER", cleanDestination,1500, "Entrega via courier mediante identificação do solicitante");
+    return new PickupTerms("COURIER", cleanDestination,1500, "Entrega" +
+            " via courier mediante identificação do solicitante");
   }
 
   @Override
   public ReturnTerms returns(Booking booking, String destination) {
     String cleanDestination = validateDestination(destination);
-    return new ReturnTerms("COURIER", cleanDestination,booking.getEndsAt(), "Devolução via courier: recolhimento dos equipamentos no local informado");
+    return new ReturnTerms("COURIER", cleanDestination,booking.getEndsAt(),
+            "Devolução via courier: recolhimento dos equipamentos no local informado");
   }
 
   private String validateDestination(String destination) {
