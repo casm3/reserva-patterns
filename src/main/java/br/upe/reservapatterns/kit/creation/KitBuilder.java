@@ -34,19 +34,30 @@ public class KitBuilder {
   public KitBuilder add(Equipment equipment, int quantity) {
     if (quantity > 0 && quantity <= equipment.getTotalUnits()) {
       Entry entry = new Entry(equipment, quantity);
+
+      if (this.entries.contains(entry)) {
+        throw new IllegalArgumentException("Um mesmo item não pode ser adicionado mais de uma vez");
+      }
+
       entries.add(entry);
     } else {
       throw new IllegalArgumentException("A quantidade dos equipamentos não pode ser negativa ou" +
               "maior que a quantidade total de itens");
     }
+
     return this;
   }
 
   public Kit build() {
+    if (this.entries.isEmpty()) {
+      throw new IllegalArgumentException("O kit precisa ter ao menos um item");
+    }
+
     Kit kit = new Kit(this.name, this.description);
     for (Entry entry: this.entries) {
       kit.add(entry.equipment, entry.quantity);
     }
+
     return kit;
   }
 
