@@ -9,12 +9,21 @@ import org.springframework.stereotype.Component;
 public class CounterHandoverFactory implements HandoverFactory {
   @Override
   public PickupTerms pickup(Booking booking, String destination) {
-    throw new UnsupportedOperationException("Implementar retirada no balcão");
+    return new PickupTerms(
+            "COUNTER",
+            "Laboratório Central",
+            0,
+            "Retirada mediante identificação do solicitante"
+    );
   }
 
   @Override
   public ReturnTerms returns(Booking booking, String destination) {
-    throw new UnsupportedOperationException("Implementar devolução no balcão");
+    return new ReturnTerms(
+            "COUNTER",
+            "Laboratório Central",
+            booking.getEndsAt(),
+            "Prepare todos os itens para a devolução no balcão"
+    );
   }
 }
-

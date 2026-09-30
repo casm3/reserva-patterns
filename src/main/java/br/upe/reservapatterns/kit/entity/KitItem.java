@@ -27,7 +27,7 @@ public class KitItem {
 
   private int quantity;
 
-  protected KitItem() {}
+  protected KitItem(Equipment equipment, int quantity) {}
 
   KitItem(Kit kit, Equipment equipment, int quantity) {
     if (kit == null || equipment == null || quantity <= 0

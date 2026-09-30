@@ -6,11 +6,24 @@ import br.upe.reservapatterns.booking.entity.Booking;
 import br.upe.reservapatterns.kit.entity.Kit;
 import br.upe.reservapatterns.staff.entity.StaffUser;
 import org.springframework.stereotype.Component;
+import br.upe.reservapatterns.booking.entity.BookingKind;
+import br.upe.reservapatterns.booking.entity.BookingStatus;
 
 @Component("LECTURE")
 public class LectureBookingCreator extends BookingCreator {
   @Override
-  protected Booking create(Kit kit, StaffUser requester, LocalDateTime startsAt) {
-    throw new UnsupportedOperationException("Implementar reserva para aula");
+  protected Booking create(
+          Kit kit,
+          StaffUser requester,
+          LocalDateTime startsAt
+  ) {
+    return new Booking(
+            kit,
+            requester,
+            startsAt,
+            startsAt.plusHours(4),
+            BookingKind.LECTURE,
+            BookingStatus.CONFIRMED
+    );
   }
 }
