@@ -16,7 +16,8 @@ public class KitBuilder {
   }
 
   public KitBuilder description(String description) {
-    throw new UnsupportedOperationException("Implementar Builder");
+    this.description = description == null ? "" : description;
+    return this;
   }
 
   public KitBuilder add(Equipment equipment, int quantity) {
