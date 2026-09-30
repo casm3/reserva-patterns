@@ -8,6 +8,9 @@ public class KitPrototype {
   private final Kit original;
 
   public KitPrototype(Kit original) {
+    if (original == null) {
+      throw new IllegalArgumentException("O kit original não pode ser nulo");
+    }
     this.original = original;
   }
 
