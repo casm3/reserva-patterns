@@ -12,19 +12,44 @@ public class KitBuilder {
   private final List<Entry> entries = new ArrayList<>();
 
   public KitBuilder(String name) {
-    this.name = name;
+    if (name == null || name.isBlank()) {
+      throw new IllegalArgumentException("Nome do kit não pode ser vazio");
+    }
+    this.name = name.trim();
   }
 
   public KitBuilder description(String description) {
-    throw new UnsupportedOperationException("Implementar Builder");
+    this.description = description == null ? "" : description;
+    return this;
   }
 
   public KitBuilder add(Equipment equipment, int quantity) {
-    throw new UnsupportedOperationException("Implementar Builder");
+    if (equipment == null) {
+      throw new IllegalArgumentException("Equipamento não pode ser nulo");
+    }
+    if(quantity <= 0 || quantity > equipment.getTotalUnits()) {
+      throw new IllegalArgumentException("Quantidade inválida ou fora do estoque");
+    }
+    boolean exists = entries.stream()
+        .anyMatch(entry -> entry.equipment().equals(equipment)
+            || (entry.equipment().getId() != null && entry.equipment().getId().equals(equipment.getId()))
+            || entry.equipment().getName().equalsIgnoreCase(equipment.getName()));
+    if (exists) {
+      throw new IllegalArgumentException("Equipamento repetido no kit");
+    }
+    entries.add(new Entry(equipment, quantity));
+    return this;
   }
 
   public Kit build() {
-    throw new UnsupportedOperationException("Implementar Builder");
+    if (entries.isEmpty()) {
+      throw new IllegalArgumentException("O kit deve conter pelo menos um item");
+    }
+    Kit kit = new Kit(this.name, this.description);
+    for (Entry entry : entries) {
+      kit.add(entry.equipment(), entry.quantity());
+    }
+    return kit;
   }
 
   private record Entry(Equipment equipment, int quantity) {}
