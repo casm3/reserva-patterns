@@ -1,6 +1,7 @@
 package br.upe.reservapatterns.kit.creation;
 
 import br.upe.reservapatterns.kit.entity.Kit;
+import br.upe.reservapatterns.kit.entity.KitItem;
 
 /** Exercício 2: cópia profunda dos itens e referência aos equipamentos do catálogo. */
 public class KitPrototype {
@@ -11,6 +12,11 @@ public class KitPrototype {
   }
 
   public Kit copy() {
-    throw new UnsupportedOperationException("Implementar Prototype");
+    Kit copy = new Kit(original.getName(), original.getDescription());
+
+    for (KitItem item : original.getItems()) {
+      copy.add(item.getEquipment(), item.getQuantity());
+    }
+    return copy;
   }
 }
