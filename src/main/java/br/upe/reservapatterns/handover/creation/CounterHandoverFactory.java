@@ -7,14 +7,21 @@ import org.springframework.stereotype.Component;
 
 @Component("COUNTER")
 public class CounterHandoverFactory implements HandoverFactory {
+  private static final String METHOD = "COUNTER";
+  private static final String LOCATION = "Laboratório central";
+
   @Override
   public PickupTerms pickup(Booking booking, String destination) {
-    throw new UnsupportedOperationException("Implementar retirada no balcão");
+    return new PickupTerms(METHOD, LOCATION, 0,
+        "Retire os itens no balcão do laboratório mediante identificação");
   }
 
   @Override
   public ReturnTerms returns(Booking booking, String destination) {
-    throw new UnsupportedOperationException("Implementar devolução no balcão");
+    if (booking == null) {
+      throw new IllegalArgumentException("Reserva é obrigatória");
+    }
+    return new ReturnTerms(METHOD, LOCATION, booking.getEndsAt(),
+        "Devolva todos os itens no balcão do laboratório");
   }
 }
-
