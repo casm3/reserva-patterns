@@ -8,7 +8,21 @@ import java.time.LocalDateTime;
 /** Exercício 3: fluxo comum e método de fábrica sobrescrito. */
 public abstract class BookingCreator {
   public final Booking open(Kit kit, StaffUser requester, LocalDateTime startsAt) {
-    throw new UnsupportedOperationException("Implementar Factory Method");
+    if (kit == null || requester == null || startsAt == null) {
+      throw new IllegalArgumentException("Argumentos inválidos");
+    }
+
+    if (kit.getItems().isEmpty()) {
+      throw new IllegalArgumentException("O kit precisa ter itens.");
+    }
+
+    Booking booking = create(kit, requester, startsAt);
+
+    for (var item : kit.getItems()) {
+      booking.addItem(item.getEquipment(), item.getQuantity());
+    }
+
+    return booking;
   }
 
   protected abstract Booking create(Kit kit, StaffUser requester, LocalDateTime startsAt);
