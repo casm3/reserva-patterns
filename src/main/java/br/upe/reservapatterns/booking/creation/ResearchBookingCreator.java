@@ -6,11 +6,24 @@ import br.upe.reservapatterns.booking.entity.Booking;
 import br.upe.reservapatterns.kit.entity.Kit;
 import br.upe.reservapatterns.staff.entity.StaffUser;
 import org.springframework.stereotype.Component;
+import br.upe.reservapatterns.booking.entity.BookingKind;
+import br.upe.reservapatterns.booking.entity.BookingStatus;
 
 @Component("RESEARCH")
 public class ResearchBookingCreator extends BookingCreator {
   @Override
-  protected Booking create(Kit kit, StaffUser requester, LocalDateTime startsAt) {
-    throw new UnsupportedOperationException("Implementar reserva para pesquisa");
+  protected Booking create(
+          Kit kit,
+          StaffUser requester,
+          LocalDateTime startsAt
+  ) {
+    return new Booking(
+            kit,
+            requester,
+            startsAt,
+            startsAt.plusHours(48),
+            BookingKind.RESEARCH,
+            BookingStatus.PENDING
+    );
   }
 }
