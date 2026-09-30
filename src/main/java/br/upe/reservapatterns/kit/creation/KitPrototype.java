@@ -16,9 +16,11 @@ public class KitPrototype {
 
   public Kit copy() {
     Kit kitCopy = new Kit(original.getName(), original.getDescription());
+
     for (KitItem kitItem : original.getItems()) {
       kitCopy.add(kitItem.getEquipment(), kitItem.getQuantity());
     }
+
     return kitCopy;
   }
 }
