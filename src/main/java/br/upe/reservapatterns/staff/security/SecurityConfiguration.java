@@ -74,7 +74,13 @@ public class SecurityConfiguration {
             .httpBasic(basic -> basic.disable())
             .formLogin(form -> form.disable())
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/auth/login").permitAll()
+                    .requestMatchers(
+                            "/api/auth/login",
+                            "/v3/api-docs",
+                            "/v3/api-docs/**",
+                            "/swagger-ui.html",
+                            "/swagger-ui/**"
+                    ).permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/staff/users").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/equipments").hasAnyRole("ADMIN", "STAFF")
                     .requestMatchers(HttpMethod.POST, "/api/kits", "/api/kits/*/copies")
@@ -87,6 +93,7 @@ public class SecurityConfiguration {
                     .anyRequest().authenticated())
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt ->
                     jwt.jwtAuthenticationConverter(converter)));
+
     return http.build();
   }
 }
