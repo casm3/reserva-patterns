@@ -9,11 +9,21 @@ import org.springframework.stereotype.Component;
 public class CourierHandoverFactory implements HandoverFactory {
   @Override
   public PickupTerms pickup(Booking booking, String destination) {
-    throw new UnsupportedOperationException("Implementar envio por mensageiro");
+    return new PickupTerms(
+            "COURIER",
+            destination.trim(),
+            1500,
+            "Entrega mediante identificação do solicitante"
+    );
   }
 
   @Override
   public ReturnTerms returns(Booking booking, String destination) {
-    throw new UnsupportedOperationException("Implementar recolhimento por mensageiro");
+    return new ReturnTerms(
+            "COURIER",
+            destination.trim(),
+            booking.getEndsAt(),
+            "Prepare todos os itens para recolhimento"
+    );
   }
 }
