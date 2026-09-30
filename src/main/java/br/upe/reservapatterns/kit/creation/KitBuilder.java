@@ -34,7 +34,7 @@ public class KitBuilder {
       }
     }
 
-    entries.add(new Entry(equipment, quantity)0,1);
+    entries.add(new Entry(equipment, quantity));
 
     return this;
   }
