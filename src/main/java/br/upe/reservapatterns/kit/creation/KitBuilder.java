@@ -16,15 +16,22 @@ public class KitBuilder {
   }
 
   public KitBuilder description(String description) {
-    throw new UnsupportedOperationException("Implementar Builder");
+    this.description = description;
+    return this;
   }
 
   public KitBuilder add(Equipment equipment, int quantity) {
-    throw new UnsupportedOperationException("Implementar Builder");
+    entries.add(new Entry(equipment, quantity));
+    return this;
   }
 
   public Kit build() {
-    throw new UnsupportedOperationException("Implementar Builder");
+    Kit kit = new Kit(name, description);
+
+    for (Entry entry : entries) {
+      kit.add(entry.equipment(), entry.quantity());
+    }
+    return kit;
   }
 
   private record Entry(Equipment equipment, int quantity) {}
