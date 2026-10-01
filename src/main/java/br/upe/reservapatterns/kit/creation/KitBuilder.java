@@ -16,15 +16,35 @@ public class KitBuilder {
   }
 
   public KitBuilder description(String description) {
-    throw new UnsupportedOperationException("Implementar Builder");
+    this.description = description == null ? "" : description;
+    return this;
   }
 
   public KitBuilder add(Equipment equipment, int quantity) {
-    throw new UnsupportedOperationException("Implementar Builder");
+    if (equipment == null) {
+      throw new IllegalArgumentException("Equipamento obrigatório");
+    }
+    if (quantity < 1 || quantity > equipment.getTotalUnits()) {
+      throw new IllegalArgumentException("Quantidade fora do estoque");
+    }
+    for (Entry entry : entries) {
+      if (equipment == entry.equipment()) {
+        throw new IllegalArgumentException("Equipamento repetido");
+      }
+    }
+    entries.add(new Entry(equipment, quantity));
+    return this;
   }
 
   public Kit build() {
-    throw new UnsupportedOperationException("Implementar Builder");
+    if (entries.isEmpty()) {
+      throw new IllegalArgumentException("Kit precisa de ao menos um item");
+    }
+    Kit kit = new Kit(name, description);
+    for (Entry entry : entries) {
+      kit.add(entry.equipment(), entry.quantity());
+    }
+    return kit;
   }
 
   private record Entry(Equipment equipment, int quantity) {}
