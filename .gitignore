@@ -27,6 +27,7 @@ target/*
 .idea
 *.iml
 .env
+.env.example
 .DS_Store
 nota.md
 pr-numero.txt

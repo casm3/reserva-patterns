@@ -30,6 +30,7 @@ import org.springframework.test.context.ActiveProfiles;
 @DisplayName("Exercício #04 - AbstractFactory")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Execution(ExecutionMode.CONCURRENT)
+
 class Req04AbstractFactoryTest {
   private final LocalDateTime start = LocalDateTime.of(2030, 4, 2, 9, 0);
   private final Booking booking = new Booking(new Kit("Aula", ""),

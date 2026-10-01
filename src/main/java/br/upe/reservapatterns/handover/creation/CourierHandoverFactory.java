@@ -7,13 +7,34 @@ import org.springframework.stereotype.Component;
 
 @Component("COURIER")
 public class CourierHandoverFactory implements HandoverFactory {
+  private static final String METHOD = "COURIER";
+  private static final int FEE_CENTS = 1500;
+  private static final int MAX_DESTINATION = 200;
+
   @Override
   public PickupTerms pickup(Booking booking, String destination) {
-    throw new UnsupportedOperationException("Implementar envio por mensageiro");
+    String location = normalize(destination);
+    return new PickupTerms(METHOD, location, FEE_CENTS,
+            "Entrega mediante identificação do solicitante");
   }
 
   @Override
   public ReturnTerms returns(Booking booking, String destination) {
-    throw new UnsupportedOperationException("Implementar recolhimento por mensageiro");
+    String location = normalize(destination);
+    return new ReturnTerms(METHOD, location, booking.getEndsAt(),
+            "Prepare todos os itens para recolhimento");
+  }
+
+  private String normalize(String destination) {
+    if (destination == null || destination.isBlank()) {
+      throw new IllegalArgumentException(
+              "Destino obrigatório para entrega por mensageiro");
+    }
+    String location = destination.trim();
+    if (location.length() > MAX_DESTINATION) {
+      throw new IllegalArgumentException(
+              "Destino deve ter até 200 caracteres");
+    }
+    return location;
   }
 }
